@@ -362,6 +362,7 @@ public class ArtifactoryGenericConfigurator extends BuildWrapper implements Depl
             RefreshServerResponse response = new RefreshServerResponse();
             ArtifactoryServer artifactoryServer = RepositoriesUtils.getArtifactoryServer(url, RepositoriesUtils.getArtifactoryServers());
 
+            System.out.println("reached here");
             try {
                 releaseRepositoryKeysFirst = RepositoriesUtils.getLocalRepositories(url, credentialsUsername, credentialsPassword,
                         overridingDeployerCredentials, artifactoryServer);
@@ -382,7 +383,7 @@ public class ArtifactoryGenericConfigurator extends BuildWrapper implements Depl
 
         @Override
         public String getDisplayName() {
-            return "Generic-Artifactory Integration";
+            return "Dow Jones Artifactory Integration";
         }
 
         @Override

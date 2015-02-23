@@ -31,7 +31,8 @@
 
     <properties>
         <buildinfo.version>2.3.3</buildinfo.version>
-        <buildinfo.maven3.version>2.4.3</buildinfo.maven3.version>
+        <buildinfo.vcs.version>2.3.2</buildinfo.vcs.version>
+        <buildinfo.maven3.version>2.2.1</buildinfo.maven3.version>
         <buildinfo.gradle.version>3.0.3</buildinfo.gradle.version>
         <buildinfo.ivy.version>2.3.2</buildinfo.ivy.version>
         <maven-release-plugin.version>2.2</maven-release-plugin.version>
@@ -163,7 +164,7 @@
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-vcs</artifactId>
-            <version>${buildinfo.version}</version>
+            <version>${buildinfo.vcs.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.thoughtworks.xstream</groupId>
@@ -334,7 +335,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.0</version>
+                <version>1.0</version><!--$NO-MVN-MAN-VER$-->
                 <executions>
                     <execution>
                         <goals>
@@ -373,6 +374,41 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.zeroturnaround
+        								</groupId>
+        								<artifactId>
+        									jrebel-maven-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.1.1,)
+        								</versionRange>
+        								<goals>
+        									<goal>generate</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
     </build>
 
     <scm>

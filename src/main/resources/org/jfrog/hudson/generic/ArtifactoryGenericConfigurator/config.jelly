@@ -1,12 +1,37 @@
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:r="/lib/jfrog" xmlns:st="jelly:stapler">
-    <f:section title="${%Artifactory Configuration}">
-        <f:dropdownList name="details" title="${%Artifactory server}">
+    <f:section title="${%Dow Jones Artifactory Configuration}">
+        <f:dropdownList name="details" title="${%Dow Jones Artifactory server}">
             <j:forEach var="s" items="${descriptor.artifactoryServers}" varStatus="loop">
                 <f:dropdownListBlock value="${s.name}" title="${s.url}" selected="${s.name==instance.artifactoryName}">
                     <f:nested>
                         <input type="hidden" name="artifactoryName" value="${s.name}"/>
                         <input type="hidden" name="artifactoryUrl" id="artifactoryUrlDeploy${s.url}" value="${s.url}"/>
                         <input type="hidden" name="stapler-class" value="org.jfrog.hudson.ServerDetails"/>
+                        
+                        <f:entry title="${%Artifact Type}"
+                        		help="/plugin/artifactory/help/common/help-artifactType.html">
+                        	<select class="setting-input" name="repositoryKey" id="genericRepositoryKeys-${s.url}">
+                                <j:choose>
+                                    <j:when test="${s.name==instance.artifactoryName}">
+                                        <j:choose>
+                                            <j:when test="${instance.repositoryKey != null}">
+                                                <f:option selected="${instance.repositoryKey}"
+                                                          value="${instance.repositoryKey}">${instance.repositoryKey}
+                                                </f:option>
+                                            </j:when>
+                                            <j:otherwise>
+                                                <j:forEach var="r" items="${instance.releaseRepositoryKeysFirst}">
+                                                    <f:option selected="${r==instance.repositoryKey}" value="${r}">${r}
+                                                    </f:option>
+                                                </j:forEach>
+                                            </j:otherwise>
+                                        </j:choose>
+                                    </j:when>
+                                </j:choose>
+                            </select>
+                        </f:entry>
+                        
+                        <!--
                         <f:entry title="${%Target Repository}"
                                  help="/plugin/artifactory/help/common/help-deployRepository.html">
                             <select class="setting-input" name="repositoryKey" id="genericRepositoryKeys-${s.url}">
@@ -29,6 +54,8 @@
                                 </j:choose>
                             </select>
                         </f:entry>
+                        -->
+                        
                         <script>
                             var genericDeployBind =
                             <st:bind value="${descriptor}"/>
@@ -86,7 +113,7 @@
                                  help="/plugin/artifactory/help/common/help-deployBuildInfo.html"
                                  inline="true">
 
-                    <f:optionalBlock name="includeEnvVars" checked="${instance.includeEnvVars}"
+                    <f:optionalBlock name="includeEnvVars" checked="${h.defaultToTrue(instance.includeEnvVars)}"
                                      title="Include environment variables"
                                      help="/plugin/artifactory/help/common/help-includeEnvVars.html"
                                      inline="true">
